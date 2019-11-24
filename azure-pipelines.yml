@@ -1,8 +1,11 @@
 trigger:
 - '*'
 
+
 pool:
   vmImage: 'ubuntu-16.04'
+  demands: 
+    - npm
 
 variables:
   buildConfiguration: 'Release'
@@ -23,3 +26,26 @@ steps:
   inputs:
     command: install
     verbose: true
+
+- script: './node_modules/.bin/node-sass Tailspin.SpaceGame.Web/wwwroot --output Tailspin.SpaceGame.Web/wwwroot'
+  displayName: 'Compile Sass assets'
+
+- task: gulp@1
+  displayName: 'Run gulp tasks'
+
+- script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
+  displayName: 'Write build info to buildinfo.txt'
+  workingDirectory: Tailspin.SpaceGame.Web/wwwroot
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore project dependencies'
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build the project - Release'
+  inputs:
+    command: build
+    arguments: '--no-store --configuration Release'
+    projects: '**/*.csproj'
