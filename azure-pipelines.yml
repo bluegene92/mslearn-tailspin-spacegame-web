@@ -31,7 +31,16 @@ steps:
 
 - script: 'echo $(Build.DefinitionName), $(Build.BuildId), $(Build.BUildNumber) > buildinfo.txt'
   displayName: 'Write build info to buildinfo.txt'
+  workingDirectory: $(wwwrootDir)
 
+#restore
+- task: DotNetCoreCLI@2
+  displayName: "Restore the project"
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
+
+#build
 - task: DotNetCoreCLI@2
   displayName: "Build the project - $(buildConfiguration)"
   inputs:
@@ -39,6 +48,7 @@ steps:
     arguments: "--no-restore --configuration $(buildConfiguration)"
     projects: '**/*.csproj'
 
+#publish
 - task: DotNetCoreCLI@2
   displayName: "Publish the project - $(buildConfiguration)"
   inputs:
@@ -48,7 +58,7 @@ steps:
     publishWebProjects: false
     zipAfterPublish: true
 
-# place zip file to Artifacts
+#drop to artifacts
 - task: PublishBuildArtifacts@1
   displayName: "Publish Artifact: drop"
   condition: succeeded()
