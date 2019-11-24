@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/dattran10/Space%20Web%20Game/_apis/build/status/bluegene92.mslearn-tailspin-spacegame-web?branchName=master)](https://dev.azure.com/dattran10/Space%20Web%20Game/_build/latest?definitionId=13&branchName=master)
 
 # Contributing
 
