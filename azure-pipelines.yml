@@ -50,7 +50,19 @@ steps:
     arguments: '--no-restore --configuration Release'
     projects: '**/*.csproj'
 
+
+
 #publish build to zip file
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish the project - Debug'
+  inputs:
+    command: publish
+    projects: '**/*.csproj'
+    publishWebProjects: false
+    arguments: '--no-build --configuration Debug --output $(Build.ArtifactStagingDirectory)/Debug'
+    zipAfterPublish: true
+
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - Release'
   inputs:
