@@ -6,16 +6,16 @@ pool:
   demands:
     - npm
 
-  variables:
-    buildConfiguration: Release
-    wwwrootDir: Tailspin.SpaceGame.Web/wwwroot
-    dotnetSdkVersion: 2.1.505
+variables:
+  buildConfiguration: "Release"
+  wwwrootDir: "Tailspin.SpaceGame.Web/wwwroot"
+  dotnetSdkVersion: 2.1.505
 
 steps:
 - task: UseDotNet@2
   displayName: "Use .Net Core SDK $(dotnetSdkVersion)"
   inputs:
-    packageType: sdk
+    packageType: "sdk"
     version: "$(dotnetSdkVersion)"
 
 - task: Npm@1
