@@ -53,7 +53,7 @@ steps:
   displayName: "Publish the project - $(buildConfiguration)"
   inputs:
     command: publish
-    arguments: "--no-build --configuration $(buildConfiguration)"
+    arguments: "--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/Release"
     projects: '**/*.csproj'
     publishWebProjects: false
     zipAfterPublish: true
