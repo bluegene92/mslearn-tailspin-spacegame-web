@@ -38,12 +38,23 @@ steps:
     command: 'restore'
     projects: '**/*.csproj'
 
+
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - $(buildConfiguration)'
   inputs:
     command: 'build'
     arguments: '--no-restore --configuration $(buildConfiguration)'
     projects: '**/*.csproj'
+
+
+#test - get trx result from $(Agent.TempDirectory)
+- task: DotNetCoreCLI@2
+  displayName: 'Run unit tests - $(buildConfiguration)'
+  inputs:
+    command: test
+    publishTestResults: true
+    arguments: '--no-build --configuration $(buildConfiguration)'
+    projects: '**/*.Tests.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - $(buildConfiguration)'
