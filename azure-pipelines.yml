@@ -66,7 +66,11 @@ steps:
 #run coverage report after test - convert cobertunra to HTML
 - script: 'reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines'
   displayName: 'Create code coverage report'
-  
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage'
+
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - $(buildConfiguration)'
   inputs:
@@ -75,6 +79,7 @@ steps:
     publishWebProjects: false
     arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
     zipAfterPublish: true
+
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
