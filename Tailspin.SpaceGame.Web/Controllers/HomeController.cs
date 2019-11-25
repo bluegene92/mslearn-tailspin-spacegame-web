@@ -74,7 +74,7 @@ namespace TailSpin.SpaceGame.Web.Controllers
         IEnumerable<Score> scores = await _scoreRepository.GetItemsAsync(
             queryPredicate, // the predicate defined above
             score => score.HighScore, // sort descending by high score
-            page, // subtract 1 to make the query 0-based
+            page - 1, // subtract 1 to make the query 0-based
             pageSize
           );
 
